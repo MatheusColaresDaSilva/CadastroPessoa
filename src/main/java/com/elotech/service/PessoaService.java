@@ -1,6 +1,8 @@
 package com.elotech.service;
 
 import com.elotech.business.RegraValidator;
+import com.elotech.dto.request.ContatoRequestDTO;
+import com.elotech.dto.request.PessoaRequestDTO;
 import com.elotech.dto.response.ContatoResponseDTO;
 import com.elotech.dto.response.PessoaResponseDTO;
 import com.elotech.entity.Contato;
@@ -8,7 +10,9 @@ import com.elotech.entity.Pessoa;
 import com.elotech.exception.PessoaNaoEncontradaException;
 import com.elotech.repository.PessoaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +41,28 @@ public class PessoaService {
         return entityToPessoaDto(pessoa);
     }
 
-    private Pessoa getPessoaPorId(Long id) {
-        return pessoaRepository.findById(id).orElseThrow(() -> new PessoaNaoEncontradaException());
+    @Transactional
+    public PessoaResponseDTO criaPessoa(PessoaRequestDTO pessoaRequestDTO) {
+        RegraValidator regraValidator = new RegraValidator();
+        regraValidator.isCpfValido(pessoaRequestDTO.getCpf());
+        regraValidator.isDataNascimentoValida(pessoaRequestDTO.getDataNascimento(), LocalDate.now());
+        pessoaRequestDTO.getContatos().forEach(contatoRequestDTO ->
+                regraValidator.isEmailValido(contatoRequestDTO.getEmail()));
+
+        final Pessoa pessoa = pessoaDtoToEntity(pessoaRequestDTO, new Pessoa());
+        return entityToPessoaDto(pessoaRepository.save(pessoa));
+    }
+
+    public PessoaResponseDTO atualizaPessoa(PessoaRequestDTO pessoaRequestDTO, Long id) {
+        final Pessoa pessoa = getPessoaPorId(id);
+        final Pessoa pessoaAtualizada = atualizaPessoaDtoToEntity(pessoaRequestDTO, pessoa);
+
+        return entityToPessoaDto(pessoaRepository.save(pessoaAtualizada));
+    }
+
+    public void deletePessoa(Long id) {
+        final Pessoa pessoa = getPessoaPorId(id);
+        pessoaRepository.delete(pessoa);
     }
 
     private PessoaResponseDTO entityToPessoaDto(Pessoa pessoa) {
@@ -61,8 +85,47 @@ public class PessoaService {
                 .nome(contato.getNome())
                 .telefone(contato.getTelefone())
                 .email(contato.getEmail())
-                //.pessoa(contato.getPessoa().getId())
                 .build();
     }
+
+    private Pessoa pessoaDtoToEntity(PessoaRequestDTO pessoaRequestDTO, Pessoa pessoa) {
+            List<Contato> contatos = new ArrayList<>();
+
+            pessoaRequestDTO.getContatos().forEach(contatoRequestDTO -> contatos.add(contatoDtoToEntity(contatoRequestDTO, new Contato())));
+
+            pessoa.setNome(pessoaRequestDTO.getNome());
+            pessoa.setDataNascimento(pessoaRequestDTO.getDataNascimento());
+            pessoa.setCpf(pessoaRequestDTO.getCpf());
+            pessoa.setContatos(contatos);
+
+            return pessoa;
+    }
+
+    private Contato contatoDtoToEntity(ContatoRequestDTO contatoRequestDTO, Contato contato) {
+        contato.setNome(contatoRequestDTO.getNome());
+        contato.setEmail(contatoRequestDTO.getEmail());
+        contato.setTelefone(contatoRequestDTO.getTelefone());
+
+        return contato;
+    }
+
+    private Pessoa atualizaPessoaDtoToEntity(PessoaRequestDTO pessoaRequestDTO, Pessoa pessoa) {
+        List<Contato> contatos = new ArrayList<>();
+
+        pessoaRequestDTO.getContatos().forEach(contatoRequestDTO -> contatos.add(contatoDtoToEntity(contatoRequestDTO, new Contato())));
+        pessoa.getContatos().addAll(contatos);
+
+        pessoa.setNome(pessoaRequestDTO.getNome()==null?pessoa.getNome():pessoaRequestDTO.getNome());
+        pessoa.setDataNascimento(pessoaRequestDTO.getDataNascimento()==null?pessoa.getDataNascimento():pessoaRequestDTO.getDataNascimento());
+        pessoa.setCpf(pessoaRequestDTO.getCpf()==null?pessoa.getCpf():pessoaRequestDTO.getCpf());
+        pessoa.setContatos(pessoa.getContatos());
+
+        return pessoa;
+    }
+
+    private Pessoa getPessoaPorId(Long id) {
+        return pessoaRepository.findById(id).orElseThrow(() -> new PessoaNaoEncontradaException());
+    }
+
 
 }

@@ -1,13 +1,12 @@
 package com.elotech.controller;
 
+import com.elotech.dto.request.PessoaRequestDTO;
 import com.elotech.dto.response.PessoaResponseDTO;
 import com.elotech.dto.response.ResponseDTO;
 import com.elotech.service.PessoaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +30,25 @@ public class PessoaController extends BaseController{
     public ResponseEntity<ResponseDTO<List<PessoaResponseDTO>>> consultaTodos() {
         List<PessoaResponseDTO> response = pessoaService.consultaTodos();
         return ResponseEntity.ok(new ResponseDTO<>(response));
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseDTO<PessoaResponseDTO>> criaPessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
+        PessoaResponseDTO response = pessoaService.criaPessoa(pessoaRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDTO<>(response));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDTO<PessoaResponseDTO>> atualizaPessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO, @PathVariable Long id) {
+        PessoaResponseDTO response = pessoaService.atualizaPessoa(pessoaRequestDTO, id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO<>(response));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> deletePessoa(@PathVariable Long id) {
+        pessoaService.deletePessoa(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

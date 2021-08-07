@@ -1,4 +1,4 @@
-package com.elotech.dto.response;
+package com.elotech.dto.request;
 
 import lombok.*;
 
@@ -7,8 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContatoResponseDTO {
-    private Long id;
+public class ContatoRequestDTO {
     private String nome;
     private Long telefone;
     private String email;
