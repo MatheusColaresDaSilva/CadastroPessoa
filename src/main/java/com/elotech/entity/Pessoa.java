@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,8 +27,10 @@ public class Pessoa  extends BaseEntity{
     @Column(nullable = false)
     private LocalDate dataNascimento;
 
-    @Column(nullable = false)
-    @OneToMany(mappedBy="pessoa", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "pessoa", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.LAZY)
+    @NotNull
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pessoa", nullable = false)
     private List<Contato> contatos;
 
 

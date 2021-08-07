@@ -15,9 +15,10 @@ import java.time.LocalDate;
 @Table(name = "CONTATO")
 public class Contato extends BaseEntity{
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pessoa", nullable = false)
-    private Pessoa pessoa;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_pessoa", nullable = false)
+//    private Pessoa pessoa;
 
     @Column(length = 200, nullable = false)
     private String nome;
