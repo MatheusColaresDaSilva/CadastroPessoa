@@ -1,5 +1,6 @@
 package com.elotech.service;
 
+import com.elotech.business.RegraValidator;
 import com.elotech.dto.response.ContatoResponseDTO;
 import com.elotech.dto.response.PessoaResponseDTO;
 import com.elotech.entity.Contato;
@@ -10,14 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class PessoaService {
 
     private PessoaRepository pessoaRepository;
+    private RegraValidator regraValidator = new RegraValidator();
 
     public PessoaService(PessoaRepository pessoaRepository) {
         this.pessoaRepository = pessoaRepository;
@@ -41,49 +40,6 @@ public class PessoaService {
     private Pessoa getPessoaPorId(Long id) {
         return pessoaRepository.findById(id).orElseThrow(() -> new PessoaNaoEncontradaException());
     }
-
-    public Boolean isCpfValido(String cpf) {
-
-        Pattern p = Pattern.compile("^\\d{11}$");
-        Matcher m = p.matcher(cpf);
-        if(!m.find()) {
-            return false;
-        }
-
-        int soma = 0;
-        int resto;
-
-        if (cpf == "00000000000") {
-            return false;
-        }
-
-        for (int i=1; i<=9; i++) {
-            soma = soma + Integer.parseInt(cpf.substring(i-1, i)) * (11 - i);
-        }
-        resto = (soma * 10) % 11;
-        if ((resto == 10) || (resto == 11)) {
-            resto = 0;
-        }
-        if (resto != Integer.parseInt(cpf.substring(9, 10)) ) {
-            return false;
-        }
-
-        soma = 0;
-
-        for (int i = 1; i <= 10; i++) {
-            soma = soma + Integer.parseInt(cpf.substring(i-1, i)) * (12 - i);
-        }
-        resto = (soma * 10) % 11;
-        if ((resto == 10) || (resto == 11)) {
-            resto = 0;
-        }
-        if (resto != Integer.parseInt(cpf.substring(10, 11) ) ) {
-            return false;
-        }
-
-        return true;
-    }
-
 
     private PessoaResponseDTO entityToPessoaDto(Pessoa pessoa) {
 

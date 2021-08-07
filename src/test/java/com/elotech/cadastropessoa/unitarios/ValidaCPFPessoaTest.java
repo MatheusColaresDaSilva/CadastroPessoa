@@ -1,27 +1,69 @@
 package com.elotech.cadastropessoa.unitarios;
 
-import com.elotech.service.PessoaService;
-import org.junit.jupiter.api.Assertions;
+import com.elotech.business.RegraValidator;
+import com.elotech.exception.CpfInvalidoException;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.*;
+
+
 public class ValidaCPFPessoaTest {
 
-    @Autowired
-    private PessoaService pessoaService;
+    private RegraValidator regraValidator = new RegraValidator();
 
     @Test
     public void testeCpfValidoPessoa() {
-        Assertions.assertTrue(pessoaService.isCpfValido("91795184000"),"Cpf Valido");
+        assertDoesNotThrow(() -> {
+            regraValidator.isCpfValido("91795184000");
+        });
     }
 
-   @Test
+  @Test
     public void testeCpfInvalidoPessoa() {
-        Assertions.assertFalse(pessoaService.isCpfValido("91795166000"),"Cpf Invalido por numero");
-        Assertions.assertFalse(pessoaService.isCpfValido("91795A84000"),"Cpf Invalido com caractere indesejado");
-        Assertions.assertFalse(pessoaService.isCpfValido("917951840000"),"Cpf Invalido por quantidade de numero > 11");
-        Assertions.assertFalse(pessoaService.isCpfValido("9179518400"),"Cpf Invalido por quantidade de numero < 11");
+      Exception exception = assertThrows(CpfInvalidoException.class, () -> {
+          regraValidator.isCpfValido("91795166000");
+      });
+
+      String expectedMessage = "CPF Inválido";
+      String actualMessage = exception.getMessage();
+
+      assertTrue(actualMessage.contains(expectedMessage));
+
+    }
+
+    @Test
+    public void testeCpfInvalidoPessoaCaracterIndesejado() {
+        Exception exception = assertThrows(CpfInvalidoException.class, () -> {
+            regraValidator.isCpfValido("91795A84000");
+        });
+
+        String expectedMessage = "CPF Inválido";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void testeCpfInvalidoPessoaQuantidaDeDigitosMaiorOnze() {
+        Exception exception = assertThrows(CpfInvalidoException.class, () -> {
+            regraValidator.isCpfValido("917951840000");
+        });
+
+        String expectedMessage = "CPF Inválido";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void testeCpfInvalidoPessoaQuantidaDeDigitosMenosOnze() {
+        Exception exception = assertThrows(CpfInvalidoException.class, () -> {
+            regraValidator.isCpfValido("9179518400");
+        });
+
+        String expectedMessage = "CPF Inválido";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
