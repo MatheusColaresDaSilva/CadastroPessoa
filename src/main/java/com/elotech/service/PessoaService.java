@@ -12,6 +12,7 @@ import com.elotech.repository.PessoaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,11 @@ public class PessoaService {
 
     private PessoaRepository pessoaRepository;
     private RegraValidator regraValidator = new RegraValidator();
+    private final Clock clock;
 
-    public PessoaService(PessoaRepository pessoaRepository) {
+    public PessoaService(PessoaRepository pessoaRepository,Clock clock) {
         this.pessoaRepository = pessoaRepository;
+        this.clock = clock;
     }
 
     public List<PessoaResponseDTO> consultaTodos() {
@@ -45,7 +48,7 @@ public class PessoaService {
     public PessoaResponseDTO criaPessoa(PessoaRequestDTO pessoaRequestDTO) {
         RegraValidator regraValidator = new RegraValidator();
         regraValidator.isCpfValido(pessoaRequestDTO.getCpf());
-        regraValidator.isDataNascimentoValida(pessoaRequestDTO.getDataNascimento(), LocalDate.now());
+        regraValidator.isDataNascimentoValida(pessoaRequestDTO.getDataNascimento(), getDataAtual());
         pessoaRequestDTO.getContatos().forEach(contatoRequestDTO ->
                 regraValidator.isEmailValido(contatoRequestDTO.getEmail()));
 
@@ -53,6 +56,11 @@ public class PessoaService {
         return entityToPessoaDto(pessoaRepository.save(pessoa));
     }
 
+    public LocalDate getDataAtual() {
+        return LocalDate.now(clock);
+    }
+
+    @Transactional
     public PessoaResponseDTO atualizaPessoa(PessoaRequestDTO pessoaRequestDTO, Long id) {
         final Pessoa pessoa = getPessoaPorId(id);
         final Pessoa pessoaAtualizada = atualizaPessoaDtoToEntity(pessoaRequestDTO, pessoa);
@@ -60,6 +68,7 @@ public class PessoaService {
         return entityToPessoaDto(pessoaRepository.save(pessoaAtualizada));
     }
 
+    @Transactional
     public void deletePessoa(Long id) {
         final Pessoa pessoa = getPessoaPorId(id);
         pessoaRepository.delete(pessoa);
