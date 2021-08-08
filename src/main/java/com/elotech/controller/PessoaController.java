@@ -32,6 +32,7 @@ public class PessoaController extends BaseController{
         return ResponseEntity.ok(new ResponseDTO<>(response));
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseEntity<ResponseDTO<PessoaResponseDTO>> criaPessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
         PessoaResponseDTO response = pessoaService.criaPessoa(pessoaRequestDTO);
