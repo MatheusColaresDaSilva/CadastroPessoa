@@ -25,9 +25,6 @@ public class AppStartRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("Nois");
-
-
         Pessoa pessoa1 = new Pessoa();
 
         pessoa1.setNome("Matheus Colares");
@@ -38,9 +35,6 @@ public class AppStartRunner implements ApplicationRunner {
         contato1.setNome("Danielle");
         contato1.setEmail("nnnnn@gmail.com");
         contato1.setTelefone(999999999999L);
-        //contato1.setPessoa(pessoa1);
-
-        //contatoRepository.save(contato2);
 
         pessoa1.setContatos(Arrays.asList(contato1));
         pessoaRepository.save(pessoa1);
