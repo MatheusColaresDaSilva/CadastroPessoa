@@ -1,30 +1,29 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../Context";
 
-const CidadeList = () => {
+const PessoaList = () => {
   const {
     users,
     userLength
   } = useContext(AppContext);
 
-  // Storing users new data when they editing their info.
   const [newData, setNewData] = useState({});
 
   return !userLength ? (
-    <p>{userLength === null ? "Carregando..." : "Por favor, insira alguma cidade."}</p>
+    <p>{userLength === null ? "Carregando..." : "Por favor, insira alguma pessoa."}</p>
   ) : (
     <table>
       <thead>
         <tr>
           <th>Nome</th>
-          <th>Cep</th>
+          <th>CPF</th>
         </tr>
       </thead>
       <tbody>
         {users.map(function (element) {
                      return <tr key={element["id"]}>
                      <td>{element["nome"]}</td>
-                     <td>{element["cep"]}</td>
+                     <td>{element["cpf"]}</td>
                    </tr>;
                   })}
       </tbody>
@@ -33,4 +32,4 @@ const CidadeList = () => {
 
 };
 
-export default CidadeList;
+export default PessoaList;

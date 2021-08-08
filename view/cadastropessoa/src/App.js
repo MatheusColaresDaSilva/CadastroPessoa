@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Provider } from "./Context";
 import  Form  from "./components/Form";
-import  CidadeList  from "./components/CidadeList";
+import  PessoaList  from "./components/PessoaList";
 import { Actions } from "./Actions";
 function App() {
   const data = Actions();
@@ -15,7 +15,7 @@ function App() {
             <Form />
           </section>
           <section className="right-side">
-            <CidadeList />
+            <PessoaList />
           </section>
         </div>
       </div>
