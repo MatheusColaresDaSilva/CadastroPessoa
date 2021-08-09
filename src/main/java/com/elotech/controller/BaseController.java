@@ -21,7 +21,7 @@ public abstract class BaseController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ResponseDTO<Object>> handleException(ConstraintViolationException ex) {
-        ErroResponseDTO erroResponseDTO = new ErroResponseDTO(ex.getMessage());
+        ErroResponseDTO erroResponseDTO = new ErroResponseDTO(ex.getMessage().split("messageTemplate='")[1].split("'}")[0]);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseDTO.comErro(erroResponseDTO));
     }
