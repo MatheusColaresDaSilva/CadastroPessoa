@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ee2a26c6-b540-4e45-a331-ba2ed8cbc94e",
+		"_postman_id": "044e388a-424b-46f1-b910-6b5e6bc34806",
 		"name": "CadastroPessoaAWS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,9 +11,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -35,9 +35,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/1",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/1",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -69,9 +69,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -103,9 +103,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -137,9 +137,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -171,9 +171,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -205,9 +205,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -239,9 +239,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -273,9 +273,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -307,9 +307,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -341,9 +341,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -375,9 +375,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -409,9 +409,9 @@
 					}
 				},
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/1",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/1",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
@@ -434,9 +434,9 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "ec2-3-135-246-143.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/1",
+					"raw": "ec2-3-137-187-203.us-east-2.compute.amazonaws.com:8080/api/v1/pessoa/1",
 					"host": [
-						"ec2-3-135-246-143",
+						"ec2-3-137-187-203",
 						"us-east-2",
 						"compute",
 						"amazonaws",
