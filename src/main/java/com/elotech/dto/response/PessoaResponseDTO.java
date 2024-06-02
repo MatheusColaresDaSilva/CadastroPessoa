@@ -12,8 +12,8 @@ import java.util.List;
 @Builder
 public class PessoaResponseDTO {
     private Long id;
-    private String nome;
-    private String cpf;
-    private LocalDate dataNascimento;
+    private String name;
+    private String sin;
+    private LocalDate birthDate;
     private List<ContatoResponseDTO> contatos;
 }

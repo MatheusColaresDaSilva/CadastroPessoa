@@ -17,6 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -70,7 +73,8 @@ public class PessoaServiceTest {
         pessoas.add(criaEntidadePessoa());
         when(pessoaRepository.findAll()).thenReturn(pessoas);
 
-        List<PessoaResponseDTO> pessoasResponseDTO = pessoaService.consultaTodos();
+        Pageable pageable = PageRequest.of(0, 8);
+        Page<PessoaResponseDTO> pessoasResponseDTO = pessoaService.consultaTodos(pageable);
 
         verify(pessoaRepository).findAll();
         verifyNoMoreInteractions(pessoaRepository);
@@ -88,7 +92,7 @@ public class PessoaServiceTest {
         verify(pessoaRepository).findById(eq(pessoa.getId()));
         verifyNoMoreInteractions(pessoaRepository);
 
-        assertEquals(pessoasResponseDTO.getCpf(), pessoa.getCpf());
+        assertEquals(pessoasResponseDTO.getSin(), pessoa.getCpf());
     }
 
     @Test
@@ -104,7 +108,7 @@ public class PessoaServiceTest {
         verify(pessoaRepository).findById(eq(pessoa.getId()));
         verifyNoMoreInteractions(pessoaRepository);
 
-        assertEquals(pessoasResponseDTO.getNome(), "Novo Nome");
+        assertEquals(pessoasResponseDTO.getName(), "Novo Nome");
     }
 
     @Test
@@ -142,9 +146,9 @@ public class PessoaServiceTest {
 
     private void comparePessoaDtos(PessoaResponseDTO pessoaResponseMock, PessoaResponseDTO pessoaResponseDTO) {
         assertEquals(pessoaResponseMock.getId(),pessoaResponseDTO.getId());
-        assertEquals(pessoaResponseMock.getNome(),pessoaResponseDTO.getNome());
-        assertEquals(pessoaResponseMock.getCpf(),pessoaResponseDTO.getCpf());
-        assertEquals(pessoaResponseMock.getDataNascimento(),pessoaResponseDTO.getDataNascimento());
+        assertEquals(pessoaResponseMock.getName(),pessoaResponseDTO.getName());
+        assertEquals(pessoaResponseMock.getSin(),pessoaResponseDTO.getSin());
+        assertEquals(pessoaResponseMock.getBirthDate(),pessoaResponseDTO.getBirthDate());
 
         assertEquals(pessoaResponseMock.getContatos().size(), pessoaResponseDTO.getContatos().size());
     }
@@ -173,9 +177,9 @@ public class PessoaServiceTest {
         pessoa.add(criaContatoResponseDTO());
         return PessoaResponseDTO.builder()
                 .id(1L)
-                .nome("Jose")
-                .cpf("40906378052")
-                .dataNascimento(LocalDate.of(2021,05,02))
+                .name("Jose")
+                .sin("40906378052")
+                .birthDate(LocalDate.of(2021,05,02))
                 .contatos(pessoa)
                 .build();
     }

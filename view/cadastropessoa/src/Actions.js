@@ -53,9 +53,15 @@ export const Actions = () => {
       });
   };
 
+  const insertContato = (newContato) => {
+
+    
+  };
+
   return {
     users,
     insertUser,
     userLength,
+    insertContato
   };
 };

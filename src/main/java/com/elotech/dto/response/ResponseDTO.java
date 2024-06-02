@@ -14,11 +14,11 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO<T> {
 
-    private T dados;
+    private T content;
     private List<ErroResponseDTO> erros;
 
     public ResponseDTO(T dados) {
-        this.dados = dados;
+        this.content = dados;
     }
 
     public static ResponseDTO<Object> comErros(List<ErroResponseDTO> erros){

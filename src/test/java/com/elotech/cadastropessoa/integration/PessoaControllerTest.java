@@ -89,7 +89,7 @@ public class PessoaControllerTest extends IntegrationBaseTest{
                 });
 
         RequestSpecification requestSpecification = new RequestSpecBuilder()
-                .addPathParam("id", response.getDados().getId())
+                .addPathParam("id", response.getContent().getId())
                 .build();
 
         CadastroPessoaTestUtil.createRequestGet(URL+"/{id}",requestSpecification, HttpStatus.OK);
@@ -118,7 +118,7 @@ public class PessoaControllerTest extends IntegrationBaseTest{
         pessoaResquestDTO.setDataNascimento(LocalDate.of(2021, 10, 1));
         pessoaResquestDTO.setCpf("48779827012");
 
-        CadastroPessoaTestUtil.createRequestPut(URL+"/"+response.getDados().getId(),pessoaResquestDTO, HttpStatus.OK)
+        CadastroPessoaTestUtil.createRequestPut(URL+"/"+response.getContent().getId(),pessoaResquestDTO, HttpStatus.OK)
                 .rootPath("dados")
                 .body("id", Matchers.greaterThan(0))
                 .body("nome", Matchers.equalTo("Nome Atualizado"))
@@ -138,7 +138,7 @@ public class PessoaControllerTest extends IntegrationBaseTest{
                 });
 
         RequestSpecification requestSpecification = new RequestSpecBuilder()
-                .addPathParam("id", response.getDados().getId())
+                .addPathParam("id", response.getContent().getId())
                 .build();
 
         CadastroPessoaTestUtil.createRequestDelete(URL+"/{id}",requestSpecification, HttpStatus.OK);

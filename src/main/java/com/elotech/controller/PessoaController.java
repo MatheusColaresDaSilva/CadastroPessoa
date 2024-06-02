@@ -4,6 +4,8 @@ import com.elotech.dto.request.PessoaRequestDTO;
 import com.elotech.dto.response.PessoaResponseDTO;
 import com.elotech.dto.response.ResponseDTO;
 import com.elotech.service.PessoaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,8 @@ public class PessoaController extends BaseController{
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDTO<List<PessoaResponseDTO>>> consultaTodos() {
-        List<PessoaResponseDTO> response = pessoaService.consultaTodos();
+    public ResponseEntity<ResponseDTO<Page<PessoaResponseDTO>>> consultaTodos(Pageable page) {
+        Page<PessoaResponseDTO> response = pessoaService.consultaTodos(page);
         return ResponseEntity.ok(new ResponseDTO<>(response));
     }
 

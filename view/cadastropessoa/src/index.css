@@ -45,9 +45,14 @@
     width: 30%;
   }
   
+  .center {
+    padding-left: 10px;
+    width: 30%;
+  }
+
   .right-side {
-    padding-left: 20px;
-    width: 70%;
+    padding-left: 10px;
+    width: 40%;
   }
   
   .right-side table {

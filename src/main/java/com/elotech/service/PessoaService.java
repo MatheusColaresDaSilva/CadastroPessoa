@@ -9,6 +9,9 @@ import com.elotech.entity.Contato;
 import com.elotech.entity.Pessoa;
 import com.elotech.exception.PessoaNaoEncontradaException;
 import com.elotech.repository.PessoaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,13 +32,13 @@ public class PessoaService {
         this.clock = clock;
     }
 
-    public List<PessoaResponseDTO> consultaTodos() {
+    public Page<PessoaResponseDTO> consultaTodos(Pageable page) {
         List<PessoaResponseDTO> pessoasResponse = new ArrayList<>();
 
-        List<Pessoa> pessoas = pessoaRepository.findAll();
+        Page<Pessoa> pessoas = pessoaRepository.findAll(page);
         pessoas.forEach(pessoa -> pessoasResponse.add(entityToPessoaDto(pessoa)));
 
-        return pessoasResponse;
+        return  new PageImpl<>(pessoasResponse, page, pessoas.getTotalElements()) ;
 
     }
 
@@ -81,9 +84,9 @@ public class PessoaService {
 
        return PessoaResponseDTO.builder()
                 .id(pessoa.getId())
-                .nome(pessoa.getNome())
-                .cpf(pessoa.getCpf())
-                .dataNascimento(pessoa.getDataNascimento())
+                .name(pessoa.getNome())
+                .sin(pessoa.getCpf())
+                .birthDate(pessoa.getDataNascimento())
                 .contatos(contatos)
                 .build();
     }
