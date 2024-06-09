@@ -1,5 +1,6 @@
 package com.elotech.controller;
 
+import com.elotech.dto.request.PessoaRequest;
 import com.elotech.dto.request.PessoaRequestDTO;
 import com.elotech.dto.response.PessoaResponseDTO;
 import com.elotech.dto.response.ResponseDTO;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/pessoa")
+@RequestMapping("/api/v1/person")
 public class PessoaController extends BaseController{
 
     private PessoaService pessoaService;
@@ -36,8 +37,8 @@ public class PessoaController extends BaseController{
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<ResponseDTO<PessoaResponseDTO>> criaPessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
-        PessoaResponseDTO response = pessoaService.criaPessoa(pessoaRequestDTO);
+    public ResponseEntity<ResponseDTO<PessoaResponseDTO>> criaPessoa(@RequestBody PessoaRequest pessoaRequest) {
+        PessoaResponseDTO response = pessoaService.criaPessoa(pessoaRequest.getPessoaRequestDTO());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseDTO<>(response));
     }

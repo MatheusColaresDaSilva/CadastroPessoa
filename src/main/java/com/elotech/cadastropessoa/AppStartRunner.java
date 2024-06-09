@@ -32,9 +32,9 @@ public class AppStartRunner implements ApplicationRunner {
         pessoa1.setDataNascimento(LocalDate.of(2021,01,10));
 
         Contato contato1 = new Contato();
-        contato1.setNome("Danielle");
+        contato1.setName("Danielle");
         contato1.setEmail("nnnnn@gmail.com");
-        contato1.setTelefone(999999999999L);
+        contato1.setPhone(999999999999L);
 
         pessoa1.setContatos(Arrays.asList(contato1));
         pessoaRepository.save(pessoa1);

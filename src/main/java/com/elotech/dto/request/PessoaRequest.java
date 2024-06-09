@@ -2,6 +2,7 @@ package com.elotech.dto.request;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PessoaRequestDTO {
-    private String name;
-    private String sin;
-    private LocalDate birthDate;
-    private List<ContatoRequestDTO> contacts = new ArrayList<>();
+public class PessoaRequest {
 
+    @NotNull
+    private PessoaRequestDTO pessoaRequestDTO;
 }

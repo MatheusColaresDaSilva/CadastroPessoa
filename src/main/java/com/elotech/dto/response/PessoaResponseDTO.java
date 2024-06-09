@@ -15,5 +15,5 @@ public class PessoaResponseDTO {
     private String name;
     private String sin;
     private LocalDate birthDate;
-    private List<ContatoResponseDTO> contatos;
+    private List<ContatoResponseDTO> contacts;
 }

@@ -102,7 +102,7 @@ public class PessoaServiceTest {
         when(pessoaRepository.findById(eq(pessoa.getId()))).thenReturn(Optional.of(pessoa));
         when(pessoaRepository.save(any(Pessoa.class))).thenReturn(pessoa);
 
-        pessoaRequestDTO.setNome("Novo Nome");
+        pessoaRequestDTO.setName("Novo Nome");
         PessoaResponseDTO pessoasResponseDTO = pessoaService.atualizaPessoa(pessoaRequestDTO, pessoa.getId());
 
         verify(pessoaRepository).findById(eq(pessoa.getId()));
@@ -114,7 +114,7 @@ public class PessoaServiceTest {
     @Test
     public void cadastraPessoaCpfInvalido() {
         PessoaRequestDTO pessoaRequestDTO = criaPessoaRequestDTO();
-        pessoaRequestDTO.setCpf("13245678915");
+        pessoaRequestDTO.setSin("13245678915");
 
         CpfInvalidoException serviceException = assertThrows(CpfInvalidoException.class, () -> pessoaService.criaPessoa(pessoaRequestDTO));
 
@@ -135,7 +135,7 @@ public class PessoaServiceTest {
     @Test
     public void cadastraPessoaEmailForaDoPadrao() {
         PessoaRequestDTO pessoaRequestDTO = criaPessoaRequestDTO();
-        pessoaRequestDTO.getContatos().stream().findFirst().get().setEmail("joaozim#.com.br");
+        pessoaRequestDTO.getContacts().stream().findFirst().get().setEmail("joaozim#.com.br");
         when(clock.instant()).thenReturn(Instant.now());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
         EmailInvalidoException serviceException = assertThrows(EmailInvalidoException.class, () -> pessoaService.criaPessoa(pessoaRequestDTO));
@@ -150,24 +150,24 @@ public class PessoaServiceTest {
         assertEquals(pessoaResponseMock.getSin(),pessoaResponseDTO.getSin());
         assertEquals(pessoaResponseMock.getBirthDate(),pessoaResponseDTO.getBirthDate());
 
-        assertEquals(pessoaResponseMock.getContatos().size(), pessoaResponseDTO.getContatos().size());
+        assertEquals(pessoaResponseMock.getContacts().size(), pessoaResponseDTO.getContacts().size());
     }
 
     private PessoaRequestDTO criaPessoaRequestDTO() {
         List<ContatoRequestDTO> contatos = new ArrayList<>();
         contatos.add(criaContatoRequestDTO());
         return PessoaRequestDTO.builder()
-                .nome("Jose")
-                .cpf("40906378052")
-                .dataNascimento(LocalDate.of(2021,05,02))
-                .contatos(contatos)
+                .name("Jose")
+                .sin("40906378052")
+                .birthDate(LocalDate.of(2021,05,02))
+                .contacts(contatos)
                 .build();
     }
 
     private ContatoRequestDTO criaContatoRequestDTO() {
         return ContatoRequestDTO.builder()
-                .nome("Maria")
-                .telefone(44999989635L)
+                .name("Maria")
+                .phone(44999989635L)
                 .email("maria@gmail.com")
                 .build();
     }
@@ -180,7 +180,7 @@ public class PessoaServiceTest {
                 .name("Jose")
                 .sin("40906378052")
                 .birthDate(LocalDate.of(2021,05,02))
-                .contatos(pessoa)
+                .contacts(pessoa)
                 .build();
     }
 
@@ -209,8 +209,8 @@ public class PessoaServiceTest {
         List<Contato> contatos = new ArrayList<>();
 
         Contato contato = Contato.builder()
-                .nome("Maria")
-                .telefone(44999989635L)
+                .name("Maria")
+                .phone(44999989635L)
                 .email("maria@gmail.com")
                 .build();
         contato.setId(2L);

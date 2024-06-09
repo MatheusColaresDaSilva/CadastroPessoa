@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ContatoRequestDTO {
-    private String nome;
-    private Long telefone;
+    private String name;
+    private Long phone;
     private String email;
 }

@@ -36,7 +36,7 @@ public class PessoaControllerTest extends IntegrationBaseTest{
     @Test
     public void criaPessoaCpfInvalidoComErro() {
         PessoaRequestDTO pessoaResquestDTO = criaPessoaSemContatoResquestDTO();
-        pessoaResquestDTO.setCpf("1234567891W");
+        pessoaResquestDTO.setSin("1234567891W");
         final ResponseDTO<PessoaResponseDTO> response = CadastroPessoaTestUtil.createRequestPost(URL, pessoaResquestDTO, HttpStatus.BAD_REQUEST)
                 .extract().body().as(new TypeRef<ResponseDTO<PessoaResponseDTO>>() {
                 });
@@ -47,7 +47,7 @@ public class PessoaControllerTest extends IntegrationBaseTest{
     @Test
     public void criaPessoaDataNascimentoSuperiorComErro() {
         PessoaRequestDTO pessoaResquestDTO = criaPessoaSemContatoResquestDTO();
-        pessoaResquestDTO.setDataNascimento(LocalDate.of(9999,01,01));
+        pessoaResquestDTO.setBirthDate(LocalDate.of(9999,01,01));
         final ResponseDTO<PessoaResponseDTO> response = CadastroPessoaTestUtil.createRequestPost(URL, pessoaResquestDTO, HttpStatus.BAD_REQUEST)
                 .extract().body().as(new TypeRef<ResponseDTO<PessoaResponseDTO>>() {
                 });
@@ -58,7 +58,7 @@ public class PessoaControllerTest extends IntegrationBaseTest{
     @Test
     public void criaPessoaContatoEmailInalidoComErro() {
         PessoaRequestDTO pessoaResquestDTO = criaPessoaComContatoRequestDTO();
-        pessoaResquestDTO.getContatos().stream().findFirst().get().setEmail("joao!.yahoo");
+        pessoaResquestDTO.getContacts().stream().findFirst().get().setEmail("joao!.yahoo");
         final ResponseDTO<PessoaResponseDTO> response = CadastroPessoaTestUtil.createRequestPost(URL, pessoaResquestDTO, HttpStatus.BAD_REQUEST)
                 .extract().body().as(new TypeRef<ResponseDTO<PessoaResponseDTO>>() {
                 });
@@ -114,9 +114,9 @@ public class PessoaControllerTest extends IntegrationBaseTest{
                 .extract().body().as(new TypeRef<ResponseDTO<PessoaResponseDTO>>() {
                 });
 
-        pessoaResquestDTO.setNome("Nome Atualizado");
-        pessoaResquestDTO.setDataNascimento(LocalDate.of(2021, 10, 1));
-        pessoaResquestDTO.setCpf("48779827012");
+        pessoaResquestDTO.setName("Nome Atualizado");
+        pessoaResquestDTO.setBirthDate(LocalDate.of(2021, 10, 1));
+        pessoaResquestDTO.setSin("48779827012");
 
         CadastroPessoaTestUtil.createRequestPut(URL+"/"+response.getContent().getId(),pessoaResquestDTO, HttpStatus.OK)
                 .rootPath("dados")
@@ -147,10 +147,10 @@ public class PessoaControllerTest extends IntegrationBaseTest{
     private PessoaRequestDTO criaPessoaSemContatoResquestDTO() {
         List< ContatoRequestDTO > contatos = new ArrayList<>();
         return PessoaRequestDTO.builder()
-                .nome("Jose")
-                .cpf("40906378052")
-                .dataNascimento(LocalDate.of(2021,05,02))
-                .contatos(contatos)
+                .name("Jose")
+                .sin("40906378052")
+                .birthDate(LocalDate.of(2021,05,02))
+                .contacts(contatos)
                 .build();
     }
 
@@ -158,17 +158,17 @@ public class PessoaControllerTest extends IntegrationBaseTest{
         List<ContatoRequestDTO> contatos = new ArrayList<>();
         contatos.add(criaContatoRequestDTO());
         return PessoaRequestDTO.builder()
-                .nome("Jose")
-                .cpf("40906378052")
-                .dataNascimento(LocalDate.of(2021,05,02))
-                .contatos(contatos)
+                .name("Jose")
+                .sin("40906378052")
+                .birthDate(LocalDate.of(2021,05,02))
+                .contacts(contatos)
                 .build();
     }
 
     private ContatoRequestDTO criaContatoRequestDTO() {
         return ContatoRequestDTO.builder()
-                .nome("Maria")
-                .telefone(44999989635L)
+                .name("Maria")
+                .phone(44999989635L)
                 .email("maria@gmail.com")
                 .build();
     }

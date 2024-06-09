@@ -50,9 +50,9 @@ public class PessoaService {
     @Transactional
     public PessoaResponseDTO criaPessoa(PessoaRequestDTO pessoaRequestDTO) {
         RegraValidator regraValidator = new RegraValidator();
-        regraValidator.isCpfValido(pessoaRequestDTO.getCpf());
-        regraValidator.isDataNascimentoValida(pessoaRequestDTO.getDataNascimento(), getDataAtual());
-        pessoaRequestDTO.getContatos().forEach(contatoRequestDTO ->
+        regraValidator.isCpfValido(pessoaRequestDTO.getSin());
+        regraValidator.isDataNascimentoValida(pessoaRequestDTO.getBirthDate(), getDataAtual());
+        pessoaRequestDTO.getContacts().forEach(contatoRequestDTO ->
                 regraValidator.isEmailValido(contatoRequestDTO.getEmail()));
 
         final Pessoa pessoa = pessoaDtoToEntity(pessoaRequestDTO, new Pessoa());
@@ -87,15 +87,15 @@ public class PessoaService {
                 .name(pessoa.getNome())
                 .sin(pessoa.getCpf())
                 .birthDate(pessoa.getDataNascimento())
-                .contatos(contatos)
+                .contacts(contatos)
                 .build();
     }
 
     private ContatoResponseDTO entityToContatoDto(Contato contato) {
         return ContatoResponseDTO.builder()
                 .id(contato.getId())
-                .nome(contato.getNome())
-                .telefone(contato.getTelefone())
+                .nome(contato.getName())
+                .telefone(contato.getPhone())
                 .email(contato.getEmail())
                 .build();
     }
@@ -103,20 +103,20 @@ public class PessoaService {
     private Pessoa pessoaDtoToEntity(PessoaRequestDTO pessoaRequestDTO, Pessoa pessoa) {
             List<Contato> contatos = new ArrayList<>();
 
-            pessoaRequestDTO.getContatos().forEach(contatoRequestDTO -> contatos.add(contatoDtoToEntity(contatoRequestDTO, new Contato())));
+            pessoaRequestDTO.getContacts().forEach(contatoRequestDTO -> contatos.add(contatoDtoToEntity(contatoRequestDTO, new Contato())));
 
-            pessoa.setNome(pessoaRequestDTO.getNome());
-            pessoa.setDataNascimento(pessoaRequestDTO.getDataNascimento());
-            pessoa.setCpf(pessoaRequestDTO.getCpf());
+            pessoa.setNome(pessoaRequestDTO.getName());
+            pessoa.setDataNascimento(pessoaRequestDTO.getBirthDate());
+            pessoa.setCpf(pessoaRequestDTO.getSin());
             pessoa.setContatos(contatos);
 
             return pessoa;
     }
 
     private Contato contatoDtoToEntity(ContatoRequestDTO contatoRequestDTO, Contato contato) {
-        contato.setNome(contatoRequestDTO.getNome());
+        contato.setName(contatoRequestDTO.getName());
         contato.setEmail(contatoRequestDTO.getEmail());
-        contato.setTelefone(contatoRequestDTO.getTelefone());
+        contato.setPhone(contatoRequestDTO.getPhone());
 
         return contato;
     }
@@ -124,12 +124,12 @@ public class PessoaService {
     private Pessoa atualizaPessoaDtoToEntity(PessoaRequestDTO pessoaRequestDTO, Pessoa pessoa) {
         List<Contato> contatos = new ArrayList<>();
 
-        pessoaRequestDTO.getContatos().forEach(contatoRequestDTO -> contatos.add(contatoDtoToEntity(contatoRequestDTO, new Contato())));
+        pessoaRequestDTO.getContacts().forEach(contatoRequestDTO -> contatos.add(contatoDtoToEntity(contatoRequestDTO, new Contato())));
         pessoa.getContatos().addAll(contatos);
 
-        pessoa.setNome(pessoaRequestDTO.getNome()==null?pessoa.getNome():pessoaRequestDTO.getNome());
-        pessoa.setDataNascimento(pessoaRequestDTO.getDataNascimento()==null?pessoa.getDataNascimento():pessoaRequestDTO.getDataNascimento());
-        pessoa.setCpf(pessoaRequestDTO.getCpf()==null?pessoa.getCpf():pessoaRequestDTO.getCpf());
+        pessoa.setNome(pessoaRequestDTO.getName()==null?pessoa.getNome():pessoaRequestDTO.getName());
+        pessoa.setDataNascimento(pessoaRequestDTO.getBirthDate()==null?pessoa.getDataNascimento():pessoaRequestDTO.getBirthDate());
+        pessoa.setCpf(pessoaRequestDTO.getSin()==null?pessoa.getCpf():pessoaRequestDTO.getSin());
         pessoa.setContatos(pessoa.getContatos());
 
         return pessoa;
